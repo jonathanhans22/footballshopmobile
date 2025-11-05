@@ -91,3 +91,43 @@ Hot Restart
 -Kecepatan: Cukup cepat (beberapa detik), tapi lebih lambat dari hot reload.
 -Kapan digunakan: Digunakan jika perubahan kode Anda terlalu besar (misalnya, mengubah konstruktor StatelessWidget atau mengubah data state awal) yang tidak bisa ditangani oleh hot reload.
 
+
+                                TUGAS 8
+------------------------------------------------------------------------
+
+1. Perbedaan utama antara Navigator.push() dan Navigator.pushReplacement() terletak pada cara mereka mengelola tumpukan (stack) halaman.
+        - Navigator.push() "mendorong" (push) halaman baru ke atas tumpukan navigasi. Halaman sebelumnya masih ada di bawahnya, dan pengguna bisa kembali ke halaman tersebut (misalnya dengan menekan tombol kembali).
+        - Navigator.pushReplacement() "mengganti" (replace) halaman yang ada saat ini dengan halaman baru. Halaman yang lama akan dihapus (disposed) dari tumpukan. Ini berarti pengguna tidak bisa kembali ke halaman sebelumnya.
+
+    Di aplikasi Football Shop:  
+    - Saya menggunakan Navigator.push() untuk navigasi di mana pengguna diharapkan bisa kembali. Contohnya:
+    - Saat menekan card "Tambah Item" (shop_card.dart) untuk membuka ShopFormPage.
+    - Saat menekan card "Lihat Item" (shop_card.dart) untuk membuka ItemListPage.
+    - Saat menekan item di ItemListPage untuk membuka halaman detail (ItemDetailPage).
+
+    Saya menggunakan Navigator.pushReplacement() untuk navigasi di mana pengguna tidak seharusnya kembali, atau untuk menghindari penumpukan halaman yang sama. Contohnya:
+        - Saat menekan menu "Halaman Utama" di drawer (left_drawer.dart). Ini akan mengganti halaman apa pun yang sedang aktif dengan MyHomePage dan mencegah tumpukan MyHomePage yang tidak perlu.
+2. Saya memanfaatkan hierarchy widget Scaffold, AppBar, dan Drawer untuk menciptakan struktur UI yang konsisten di seluruh aplikasi.
+    - Scaffold saya gunakan sebagai widget dasar atau "kerangka" untuk setiap halaman utama (menu.dart, list_item.dart, shoplist_form.dart, dan item_detail_page.dart). Ini memberi saya slot standar untuk appBar, body, dan drawer.
+
+     - AppBar saya tempatkan di slot appBar milik Scaffold di setiap halaman. Saya mengatur backgroundColor dan foregroundColor-nya agar seragam (Indigo gelap dengan teks putih), sehingga memberikan tampilan header yang konsisten.
+
+    - Drawer saya implementasikan dalam satu file terpisah (left_drawer.dart). Widget kustom LeftDrawer ini kemudian saya panggil di properti drawer milik Scaffold di setiap halaman. Dengan cara ini, saya memastikan bahwa menu navigasi samping selalu identik dan dapat diakses dari halaman mana pun, yang membuat pengalaman pengguna menjadi sangat prediktabel.
+
+3. Dalam mendesain form (shoplist_form.dart), layout widget sangat penting untuk fungsionalitas dan kenyamanan pengguna:
+
+    - Padding: Kelebihannya adalah memberikan "ruang napas" visual. Tanpa Padding, widget form seperti TextFormField akan menempel satu sama lain dan menempel di tepi layar, membuatnya terlihat sempit dan sulit dibaca.
+        -Contoh: Saya membungkus setiap TextFormField (Nama Item, Harga, Deskripsi, dll.) di dalam Padding(padding: const EdgeInsets.all(8.0), ...). Ini menciptakan jarak yang rapi antar field input.
+
+    - SingleChildScrollView: Kelebihannya adalah krusial untuk aksesibilitas. Saat keyboard virtual muncul di layar HP, layout yang statis akan tertutup keyboard. SingleChildScrollView membungkus seluruh form dan memungkinkan pengguna untuk men-scroll konten form tersebut.
+        - Contoh: Seluruh widget Form di shoplist_form.dart saya bungkus dengan SingleChildScrollView agar semua field (terutama yang di bawah seperti "Is Featured" dan tombol "Save") tetap dapat diakses meskipun keyboard muncul.
+
+    - ListView: (Meskipun tidak dipakai di form, tapi di list_item.dart). Kelebihannya adalah efisiensi memori. ListView.builder hanya me-render item yang terlihat di layar (lazy loading).
+        - Contoh: Di list_item.dart, saya menggunakan ListView.builder untuk menampilkan daftar item. Jika ada ribuan item, aplikasi tidak akan lag karena tidak perlu me-render semuanya sekaligus.
+
+4. Saya menyesuaikan warna tema agar konsisten dengan brand "Football Shop" (yang saya putuskan bertema Indigo) langsung di file main.dart.
+Di dalam widget MaterialApp, saya mengatur properti theme menggunakan ThemeData().
+    -Saya mengatur primarySwatch: Colors.indigo sebagai dasar palet warna.
+    -Lebih spesifik lagi (menggunakan Material 3), saya mengatur colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo, primary: Colors.indigo[900]).
+    -Dengan mengatur seedColor ke Colors.indigo dan secara spesifik mengatur primary ke Colors.indigo[900] (warna indigo yang sangat gelap), Flutter secara otomatis menghasilkan palet warna yang serasi.
+    -Hasilnya, semua widget bawaan Flutter yang menggunakan warna tema, seperti AppBar dan ElevatedButton, secara otomatis mengadopsi skema warna indigo ini tanpa saya harus mengaturnya satu per satu di setiap halaman.
