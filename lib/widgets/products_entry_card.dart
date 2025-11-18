@@ -33,7 +33,7 @@ class ProductEntryCard extends StatelessWidget {
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(8.0)),
                   child: Image.network(
                     // Anda bisa tetap menggunakan proxy jika diperlukan
-                    'http://localhost:8000/proxy-image/?url=${Uri.encodeComponent(product.thumbnail!)}',
+                    'https://jonathan-hans41-footballshop.pbp.cs.ui.ac.id/proxy-image/?url=${Uri.encodeComponent(product.thumbnail!)}',
                     height: 180, // Sedikit lebih tinggi
                     width: double.infinity,
                     fit: BoxFit.cover,

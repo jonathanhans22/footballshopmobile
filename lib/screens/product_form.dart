@@ -241,7 +241,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       if (_formKey.currentState!.validate()) {
                         
                         final response = await request.postJson(
-                          "http://localhost:8000/create-product-flutter/", // Ganti URL API
+                          "https://jonathan-hans41-footballshop.pbp.cs.ui.ac.id/create-product-flutter/", // Ganti URL API
                           jsonEncode({
                             "name": _name, // Ganti _title
                             "price": _price, // Tambahkan price

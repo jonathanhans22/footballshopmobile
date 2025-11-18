@@ -39,14 +39,14 @@ class ProductEntry {
 
     factory ProductEntry.fromJson(Map<String, dynamic> json) => ProductEntry(
         id: json["id"] is String ? json["id"] : Uuid().v4(),
-        userId: json["user_id"], 
-        name: json["name"],
-        price: json["price"], // Ditambahkan
-        description: json["description"],
-        thumbnail: json["thumbnail"], 
-        category: json["category"],
-        isFeatured: json["is_featured"],
-        brand: json["brand"], // Ditambahkan
+        userId: json["user_id"] , 
+        name: json["name"] ?? "",
+        price: json["price"] ?? 0, // Ditambahkan
+        description: json["description"] ?? "",
+        thumbnail: json["thumbnail"] ?? "", 
+        category: json["category"] ?? "",
+        isFeatured: json["is_featured"] ?? false,
+        brand: json["brand"] ?? "", // Ditambahkan
     );
 
     Map<String, dynamic> toJson() => {

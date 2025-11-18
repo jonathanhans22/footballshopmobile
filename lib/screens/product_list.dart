@@ -19,7 +19,7 @@ class _ProductListPageState extends State<ProductListPage> {
   // Ganti nama fungsi dan tipe kembalian
   Future<List<ProductEntry>> fetchProducts(CookieRequest request) async {
     // Ganti URL API
-    final response = await request.get('http://localhost:8000/product-json/');
+    final response = await request.get('https://jonathan-hans41-footballshop.pbp.cs.ui.ac.id/product-json/');
     
     var data = response;
     
