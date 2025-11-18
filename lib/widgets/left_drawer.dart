@@ -1,8 +1,8 @@
-// football_shop/lib/widgets/left_drawer.dart
+// lib/widgets/left_drawer.dart (DIUBAH)
 import 'package:flutter/material.dart';
-import 'package:football_shop/screens/list_item.dart'; // Import halaman list item
-import 'package:football_shop/screens/menu.dart';
-import 'package:football_shop/screens/shoplist_form.dart';
+import 'package:football_shop/screens/menu.dart'; // DIUBAH
+import 'package:football_shop/screens/product_form.dart'; // DIUBAH
+import 'package:football_shop/screens/product_list.dart'; // DIUBAH
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -11,70 +11,69 @@ class LeftDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
+        padding: EdgeInsets.zero, // Hapus padding default
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
-              color: Color(0xFF1A237E), // Dark Indigo
+              color: Theme.of(context).colorScheme.primary, // Menggunakan warna Primary
             ),
-            child: Column(
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Football Shop', // Judul diubah
-                  textAlign: TextAlign.center,
+                  'FOOTBALL SHOP', // Diubah
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
-                Padding(padding: EdgeInsets.all(10)),
+                Padding(padding: EdgeInsets.only(top: 8)),
                 Text(
-                  "Catat semua kebutuhan bolamu di sini!", // Deskripsi diubah
-                  textAlign: TextAlign.center,
+                  "Kelola dan Lihat Produk Terbaik!", // Diubah
                   style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
               ],
             ),
           ),
+          // --- Menu Home ---
           ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text('Halaman Utama'),
+            leading: const Icon(Icons.dashboard_outlined), // Ganti ikon
+            title: const Text('Dashboard'),
             onTap: () {
               Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyHomePage(),
-                ),
-              );
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
             },
           ),
+          // --- Menu Tambah Produk ---
           ListTile(
-            leading: const Icon(Icons.add_shopping_cart),
-            title: const Text('Tambah Item'),
+            leading: const Icon(Icons.add_shopping_cart), // Ganti ikon dan teks
+            title: const Text('Add Product'),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ShopFormPage(),
-                ),
-              );
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductFormPage(),
+                  ));
             },
           ),
-          ListTile( // Link untuk "Lihat Item"
-            leading: const Icon(Icons.checklist),
-            title: const Text('Lihat Item'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ItemListPage(),
-                ),
-              );
-            },
+          // --- Menu Daftar Produk ---
+          ListTile(
+              leading: const Icon(Icons.list_alt), // Ganti ikon dan teks
+              title: const Text('Product List'),
+              onTap: () {
+                  Navigator.pushReplacement( // Menggunakan pushReplacement untuk navigasi drawer yang lebih bersih
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductListPage()),
+                  );
+              },
           ),
         ],
       ),
